@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کلینیکی پزیشکی - وەرگرتنی نۆرەی ئۆنلاین</title>
+    <!-- گووگڵ فۆنت بۆ فۆنتی کەیوان/کوردی خاوێن -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap">
+    <!-- ئایکۆنەکانی FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-color: #0d9488;
+            --accent-hover: #0f766e;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            direction: rtl;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* هێدەری سەرەوە */
+        .main-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-logo {
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .brand-logo i {
+            color: var(--accent-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-header {
+            color: #e2e8f0;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+
+        .btn-header:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-header.btn-doctor {
+            background: rgba(13, 148, 136, 0.25);
+            border-color: rgba(13, 148, 136, 0.5);
+            color: #5eead4;
+        }
+
+        .btn-header.btn-doctor:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* بەشی هێرۆ */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1.5rem 8rem 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: -6rem auto 3rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            margin-top: 4rem;
+        }
+
+        /* کارتە سەرەکییەکان */
+        .card-box {
+            background: var(--card-bg);
+            padding: 2.2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.8rem;
+        }
+
+        .card-title i {
+            color: var(--accent-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        label i {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+            background: #f8fafc;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--accent-color);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.1);
+        }
+
+        .btn-submit {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(13, 148, 136, 0.25);
+        }
+
+        .message-box {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* مۆداڵ (پەنجەرەی دەرکەوتووی پرۆفایلی دکتۆر) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(20px);
+            transition: var(--transition);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.2rem;
+            background: #f1f5f9;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal-btn:hover {
+            background: #e2e8f0;
+            color: var(--danger-color);
+        }
+
+        /* بەشی پرۆفایلی دکتۆر لەناو مۆداڵەکەدا */
+        .doctor-profile {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .doctor-img-placeholder {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 100%);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin: 0 auto;
+            border: 4px solid white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .doctor-info h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .doctor-title {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .doctor-details-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-item h4 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-item h4 i {
+            color: var(--accent-color);
+        }
+
+        .detail-item p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1.5;
+        }
+
+        .schedule-box {
+            background: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .schedule-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        .schedule-info i {
+            color: var(--accent-color);
+        }
+
+        .badge-off {
+            background: #fef2f2;
+            color: var(--danger-color);
+            border: 1px solid #fecaca;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            background: white;
+            margin-top: auto;
+        }
+
+        @media (max-width: 640px) {
+            .main-header {
+                padding: 1rem;
+            }
+
+            .header-actions {
+                gap: 6px;
+            }
+
+            .btn-header {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .doctor-profile {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .doctor-title {
+                justify-content: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- هێدەری سەرەوە (پێکهاتووە لە دوگمەی دکتۆر و سکرتێر) -->
+    <header class="main-header">
+        <a href="index.html" class="brand-logo">
+            <i class="fa-solid fa-hospital-user"></i> کلینیکی پزیشکی
+        </a>
+
+        <div class="header-actions">
+            <!-- دوگمەی زانیاری دکتۆر -->
+            <button id="openDoctorModal" class="btn-header btn-doctor">
+                <i class="fa-solid fa-user-doctor"></i> پرۆفایلی دکتۆر
+            </button>
+            <!-- دوگمەی بەشی سکرتێر -->
+            <a href="admin.html" class="btn-header">
+                <i class="fa-solid fa-user-lock"></i> بەشی سکرتێر
+            </a>
+        </div>
+    </header>
+
+    <!-- بەشی هێرۆ -->
+    <section class="hero">
+        <h1>وەرگرتنی نۆرەی ئۆنلاین</h1>
+        <p>خزمەتگوزاری نۆرەگرتنی خێرا بۆ سەردانیکردنی دکتۆر بەبێ چاوەڕوانی تەلەفۆن</p>
+    </section>
+
+    <main class="container">
+
+        <!-- فۆڕمی داواکردنی نۆرە -->
+        <section class="card-box">
+            <h2 class="card-title">
+                <i class="fa-solid fa-calendar-plus"></i> داواکردنی نۆرەی نوێ
+            </h2>
+
+            <form id="appointmentForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullName"><i class="fa-solid fa-user"></i> ناوی تەواوی نەخۆش:</label>
+                        <input type="text" id="fullName" placeholder="ناوی سیانی بنووسە..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><i class="fa-solid fa-phone"></i> ژمارەی تەلەفۆن:</label>
+                        <input type="tel" id="phone" placeholder="07XXXXXXXXX" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="appointmentDate"><i class="fa-solid fa-calendar-day"></i> بەرواری
+                            سەردانکردن:</label>
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="notes"><i class="fa-solid fa-comment-medical"></i> هۆکاری سەردان یان تێبینی
+                            (ئارەزوومەندانە):</label>
+                        <textarea id="notes" rows="3"
+                            placeholder="کورتەیەک لە کێشەکەت یان مەبەستی سەردانەکەت بنووسە..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fa-solid fa-paper-plane"></i> ناردنی داواکاری نۆرە
+                </button>
+            </form>
+
+            <div id="userMessage" class="message-box hidden">
+                <i class="fa-solid fa-circle-check" style="font-size: 1.2rem;"></i>
+                <span id="messageText">داواکارییەکەت بەسەرکەوتوویی نێردرا!</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- مۆداڵی پرۆفایلی دکتۆر (کاتێک کلیک لە دوگمەی سەرەوە دەکرێت دەکرێتەوە) -->
+    <div id="doctorModal" class="modal-overlay">
+        <div class="modal-card">
+            <button id="closeDoctorModal" class="close-modal-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="doctor-profile">
+                <div class="doctor-avatar">
+                    <div class="doctor-img-placeholder">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <!-- <img src="../kurdish boy with clothing kurdi.png" alt=""> -->
+                    </div>
+                </div>
+
+                <div class="doctor-info">
+                    <h2>د. ئازاد ئەحمەد عەلی</h2>
+                    <p class="doctor-title">
+                        <i class="fa-solid fa-stethoscope"></i> پزیشکی پسپۆڕی نەخۆشییە گشتییەکان و ناوخۆیی
+                    </p>
+
+                    <div class="doctor-details-grid">
+                        <div class="detail-item">
+                            <h4><i class="fa-solid fa-graduation-cap"></i> بڕوانامەکان</h4>
+                            <p>دکتۆرا (Ph.D) لە پزیشکی ناوخۆیی، بەکالۆریۆس لە پزیشکی و نەشتەرگەری گشتی (MBChB)</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fa-solid fa-user-check"></i> شارەزایی و پسپۆڕی</h4>
+                            <p>دیارییکردن و چارەسەری نەخۆشییەکانی شەکرە، پەستانی خوێن، هەناو و جومگەکان</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fa-solid fa-briefcase"></i> ئەزموونی کار</h4>
+                            <p>زیاتر لە ۱۲ ساڵ ئەزموونی پزیشکی لە نەخۆشخانە حکومی و تایبەتەکاندا</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4><i class="fa-solid fa-clock"></i> کاتەکانی دەوام</h4>
+                            <p>شەممە تا پێنجشەممە: ١:۰۰ی نیوه‌رو - ١٢:۰۰ی شەو</p>
+                        </div>
+                    </div>
+
+                    <div class="schedule-box">
+                        <div class="schedule-info">
+                            <i class="fa-solid fa-door-open"></i>
+                            <span>شەممە تا پێنجشەممە بەردەستە</span>
+                        </div>
+                        <div class="badge-off">
+                            <i class="fa-solid fa-circle-xmark"></i> هەینی پشووە
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 سیستەمی نۆرەگرتنی ئۆنلاینی کلینیک - هەموو مافەکان پارێزراون</p>
+    </footer>
+
+    <script>
+        // کونترۆڵکردنی مۆداڵی دکتۆر
+        const doctorModal = document.getElementById("doctorModal");
+        const openDoctorModalBtn = document.getElementById("openDoctorModal");
+        const closeDoctorModalBtn = document.getElementById("closeDoctorModal");
+
+        openDoctorModalBtn.addEventListener("click", () => {
+            doctorModal.classList.add("active");
+        });
+
+        closeDoctorModalBtn.addEventListener("click", () => {
+            doctorModal.classList.remove("active");
+        });
+
+        doctorModal.addEventListener("click", (e) => {
+            if (e.target === doctorModal) {
+                doctorModal.classList.remove("active");
+            }
+        });
+
+        // کارەکانی فۆڕمەکە
+        document.addEventListener("DOMContentLoaded", () => {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById("appointmentDate");
+            dateInput.setAttribute("min", today);
+
+            dateInput.addEventListener("input", (e) => {
+                const selectedDate = new Date(e.target.value);
+                const day = selectedDate.getUTCDay();
+
+                if (day === 5) { // ڕۆژی هەینی
+                    alert("ببوورە! ڕۆژانی هەینی کلینیک پشووە. تکایە ڕۆژێکی تر هەڵبژێرە.");
+                    e.target.value = "";
+                }
+            });
+        });
+
+        document.getElementById("appointmentForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById("fullName").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const date = document.getElementById("appointmentDate").value;
+            const notes = document.getElementById("notes").value.trim() || "هیچ تێبینییەک نییە";
+
+            const newAppointment = {
+                id: Date.now(),
+                fullName: fullName,
+                phone: phone,
+                date: date,
+                notes: notes,
+                status: "چاوەڕوانکراوە"
+            };
+
+            let appointments = JSON.parse(localStorage.getItem("doctor_appointments")) || [];
+            appointments.push(newAppointment);
+
+            localStorage.setItem("doctor_appointments", JSON.stringify(appointments));
+
+            document.getElementById("appointmentForm").reset();
+
+            const userMessage = document.getElementById("userMessage");
+            const messageText = document.getElementById("messageText");
+
+            messageText.innerText = "داواکارییەکەت بەسەرکەوتوویی نێردرا و ڕەوانەی سکرتێر کرا!";
+            userMessage.classList.remove("hidden");
+
+            setTimeout(() => {
+                userMessage.classList.add("hidden");
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>
